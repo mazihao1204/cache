@@ -2,6 +2,7 @@ package geecache
 
 import (
 	"fmt"
+	"github.com/my/repo/geecache/singlefight"
 	"log"
 	"sync"
 )
@@ -11,6 +12,7 @@ type Group struct {
 	getter Getter
 	mainCache cache
 	peers PeerPicker
+	loader *singlefight.Group
 }
 
 type Getter interface {
@@ -38,6 +40,7 @@ func NewGroup(name string,cacheBytes int,getter Getter) *Group{
 		name: name,
 		getter: getter,
 		mainCache: cache{cacheBytes: cacheBytes},
+		loader: &singlefight.Group{},
 	}
 	groups[name] = g
 	return g
